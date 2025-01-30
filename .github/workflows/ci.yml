@@ -1,32 +1,27 @@
 name: python file
 
-
 on:
-    push:
-        branches:
-            - main
+  push:
+    branches: [ main ]
+  
+
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-            - name: Set up Python 3.9
-              uses: actions/setup-python@v5
-              with:
-                  python-version: 3.9
-                
-            - name: run the python application
-              run: python app.py   
-            
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
 
-            - name: Say Hello
-              run: echo "python application compiled successfully"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-            - name: List files
-              run: ls -la
-             
-
-
+      - name: Run application
+        run: python app.py
